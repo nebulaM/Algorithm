@@ -8,7 +8,7 @@ CDate.o : CDate.cc CDate.h
 	g++ -Wall -c CDate.cc -o CDate.o 
 
 lists : lists.cc linked_list.cc Unit.o
-	g++ -Wall lists.cc Unit.o -o lists 
+	g++ -Wall -g lists.cc Unit.o -o lists 
 
 Unit.o : Unit.cc Unit.h  
 	g++ -Wall -c Unit.cc -o Unit.o 

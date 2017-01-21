@@ -107,7 +107,7 @@ int main() {
   print( list1 );
 
   insert(list1, 11);			// list1 = [11]
-  insert_after(list1, 11, 12);	// list1 = [11.12]
+  insert_after(list1, 11, 12);	// list1 = [11,12]
   std::cout << "<G> List 1: ";
   print( list1 );
   size1 = size(list1); 

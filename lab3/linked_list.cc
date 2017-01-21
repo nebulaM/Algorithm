@@ -1,5 +1,6 @@
 // linked_list.cc -- functions for linked_list lab (cs221) 
-
+#include <iostream>
+#include <vector> 
 struct Node {
   int key;
   Node* next;
@@ -15,7 +16,6 @@ void insert( Node*& head, int newKey) {
   Node * curr = new Node;
   curr->key  = newKey;
   curr->next = head;
-
   head = curr;
 }
 
@@ -60,9 +60,39 @@ std::vector<int>* to_vector(Node* head){
  * POST: the last Node of the linked_list has been removed
  * POST: if the linked_list is now empty, head has been changed 
  */
-void delete_last_element( Node*& head ){
-  // ******** WRITE YOUR CODE HERE ********
+ /*
+ side note on *& (http://stackoverflow.com/questions/5789806/meaning-of-and-in-c)
+ void nochange( int* pointer ) //passed by value
+ {
+ pointer++; // change will be discarded once function returns
+ }
 
+ void change( int*& pointer ) //passed by reference
+ {
+ pointer++; // change will persist when function returns
+ }
+ */
+void delete_last_element( Node*& head ){
+	//delete a node only if list is not empty
+	if (head) {
+		if (!head->next) {
+			//std::cout << "only one node" << std::endl;
+			delete head;
+			//necessary to let head=NULL
+			head = NULL;
+		}
+		else {
+			//std::cout << "at least 2 nodes" << std:: endl;
+			Node *prev = head, *ptr = head->next;
+			while (ptr->next) {
+				prev = ptr;
+				ptr = ptr->next;
+			}
+			delete ptr;
+			//old second last node now has next node = NULL
+			prev->next = NULL;
+		}
+	}
 }
 
 /**
@@ -74,9 +104,36 @@ void delete_last_element( Node*& head ){
  * POST: other Nodes with key=oldKey might still be in the linked_list
  */ 
 void remove( Node*& head, int oldKey) {
-  // ******** WRITE YOUR CODE HERE ********
-  
+	if (head) {
+		if (!head->next) {
+			if (head->key == oldKey) {
+				delete head;
+				head = NULL;
+			}
+		}
+		else {
+			Node *prev = head, * ptr = head->next;
+			while(ptr) {
+				if (ptr->key == oldKey) {
+					prev->next = ptr->next;
+					delete ptr;
+					ptr = NULL;
+					break;
+				}
+				prev = ptr;
+				ptr = ptr->next;
+			}
+		}
+	}
 }
+
+void insert_btw(Node*& prev, Node*& next, int newKey) {
+	Node * curr = new Node;
+	curr->key = newKey;
+	curr->next = next;
+	prev->next = curr;
+}
+
 
 /**
  * Insert a new Node (with key=newKey) after an existing Node (with key=oldKey)
@@ -88,10 +145,28 @@ void remove( Node*& head, int oldKey) {
  * POST: Else a new Node (with key=newKey) is right after the Node with key = oldKey. 
  */
 void insert_after( Node* head, int oldKey, int newKey ){
-  // ******** WRITE YOUR CODE HERE ********
-
+	if (head) {
+		while (head) {
+			if (head->key == oldKey) {
+				Node * curr = new Node;
+				curr->key = newKey;
+				curr->next = head->next;
+				head->next = curr;
+			}	
+			head = head->next;
+		}
+	}
 }
-
+void interleavInsert(Node*& head, int newKey) {
+	Node * curr = new Node;
+	curr->key = newKey;
+	curr->next = NULL;
+	while (head->next) {
+		head = head->next;
+	}
+	head->next = curr;
+	head = head->next;
+}
 /** 
  * Create a new linked_list by merging two existing linked_lists. 
  * PRE: list1 is the first Node in a linked_list (if NULL, then it is empty)
@@ -103,8 +178,26 @@ void insert_after( Node* head, int oldKey, int newKey ){
  * For example: [1, 2] and [3, 4, 5] would return [1, 3, 2, 4, 5]
  */
 Node* interleave( Node* list1, Node* list2 ){
-  // ******** WRITE YOUR CODE HERE ********
-  return NULL;  // ******** DELETE THIS LINE ********
-
+	Node head;
+	head.next = NULL;
+	Node *ptr = &head;
+	while (list1&&list2) {
+		if (list1) {
+			/*the following code leads to infinite loop
+				ptr->next=list1;
+				list1=list1->next;
+				ptr=ptr->next;
+			*/
+			interleavInsert(ptr, list1->key);
+			list1 = list1->next;
+			
+		}
+		if (list2) {
+			interleavInsert(ptr, list2->key);
+			list2 = list2->next;
+		}
+	}
+	ptr->next=(list1)? list1 : list2;
+	return head.next;
 }
 
