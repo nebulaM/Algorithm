@@ -1,24 +1,40 @@
 #include <iostream>
 #include <cstdlib>
 #include "insertion.h"
-
+int verbose=1;
 // insertion sort with several errors
 
 // store command-line arguments in x[] array 
 void getArgs( int argc, char **argv ) {
   x_size = argc - 1;
-  for(int ii = 0; ii < x_size; ii++ )
+  for(int ii = 0; ii < x_size; ii++ ){
     x[ii] = atoi( argv[ ii + 1 ] );
+	if(verbose){
+		std::cout <<"x["<<ii<<"] is "<<x[ii]<<std::endl;
+	}
+  }
 }
 
 void scootOver( int jj ) {
-  for(int kk = y_size - 1; kk > jj; kk++ ){
+	if (verbose) {
+		std::cout << "at scootOver: initially";
+		for (int kk = y_size; kk > jj; kk--) {
+			std::cout << " y[" << kk << "] = " << y[kk] <<" ";
+		}
+		std::cout << std::endl;
+	}
+
+  for(int kk = y_size; kk > jj; kk-- ){
+	 if (verbose) {
+		 std::cout << "at scootOver: let y[" << kk << "] = " << y[kk-1] << std::endl;
+	 }
     y[kk] = y[ kk - 1 ];
+
   } 
 }
 
 void insert( int xx ) {
-  if( y_size = 0 ) {
+  if( y_size == 0 ) {
     y[0] = xx;
     return;
   }
@@ -26,11 +42,17 @@ void insert( int xx ) {
   for(int jj = 0; jj < y_size; jj++ ) {
     if( xx < y[jj] ) {
       // shift y[jj], y[ jj+1 ], ... rightward before inserting xx
+	  if(verbose){
+		  std::cout << "at insert: " << xx << " < (y["<<jj<<"] = "<<y[jj] <<")"<< std::endl;
+	  }
       scootOver( jj );
       y[jj] = xx;
       return;
     }
   }
+  //xx>all of the current elements in y[], append xx at the end of y[]
+  y[y_size]=xx;
+  
 }
 
 void processData() {
