@@ -26,6 +26,8 @@ private:
 	int m_year;
 	int m_month;
 	int m_day;
+	const int DAY31 = 31;
+	const int DAY30 = 30;
 
 	int monthStr2Num(std::string month);
 	bool isValidDay(int year, int month, int day);
