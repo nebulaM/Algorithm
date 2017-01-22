@@ -123,7 +123,26 @@ bool delete_node(Node*& root, KType key) {
 		 * its predecessor or its successor. To make the lab more easy to test,
 		 * PLEASE USE THE PREDECESSOR.)
 		 */
-		return false; // return true when you're done.
+		 /**
+		 	*replace target with the max value in target's left subtree
+			*i.e., most rightitem in target's left subtree, which is the PREDECESSOR
+			*on the other hand, the min value in target's right subtree is the successor
+			*/
+		Node *ptr=target->left,*prev=target;
+		while(ptr->right){
+			prev=ptr;
+			ptr=ptr->right;
+		}
+		target->key=ptr->key;
+		//ptr==target->left means target's left subtree does not have any right child
+		if(ptr==target->left){
+			//IMPORTANT! Instead of assign NULL to prev->left, use ptr->left in case the PREDECESSOR has left children
+			prev->left=ptr->left;
+		}else{
+			prev->right=ptr->left;
+		}
+		delete ptr;
+		return true;
 	}
 
 	// case 3: target has only left child
@@ -188,67 +207,98 @@ void printTree( Node * r, int d = 0 ) {
  * Returns the number of nodes in the tree rooted at root.
  */
 int numNodes( Node* root ) {
-	/**
-	 * THIS FUNCTION NEEDS TO BE IMPLEMENTED ********************
-	 */
-	return 0;
+	if(!root){
+		return 0;
+	}
+	return 1+numNodes(root->left)+numNodes(root->right);
 }
 
 /**
  * Returns the number of leaves in the tree rooted at root.
  */
 int numLeaves( Node* root ) {
-	/**
-	 * THIS FUNCTION NEEDS TO BE IMPLEMENTED ********************
-	 */
-	return 0;
+	//base case 1: return 0 if empty
+	if(!root){
+		return 0;
+	}
+	//base case 2: is a leaf when both left and right nodes are NULL
+	if(!root->left && !root->right){
+		return 1;
+	}
+	return numLeaves(root->left)+numLeaves(root->right);
 }
 
 /**
  * Returns the height of node x.
  */
 int height( Node* x ) {
-	/**
-	 * THIS FUNCTION NEEDS TO BE IMPLEMENTED ********************
-	 */
-	return 0;
+	if(!x){
+		//minus 1 at the end since we added one more count for height
+		return -1;
+	}
+	int left=height(x->left);
+	int right=height(x->right);
+	return 1+((left>right)?left:right);
+}
+
+/**
+ * Find the depth of node x in the tree rooted at root.
+ */
+int findDepth(Node* x , Node* root, int depth){
+	if(!x || !root){
+		return 0;
+	}
+	if(x==root){
+		return depth;
+	}
+	int left=findDepth(x,root->left,depth+1);
+	if(left){
+		return left;
+	}
+	return findDepth(x,root->right,depth+1);
 }
 
 /**
  * Returns the depth of node x in the tree rooted at root.
  */
 int depth( Node* x , Node* root ) {
-	/**
-	 * THIS FUNCTION NEEDS TO BE IMPLEMENTED ********************
-	 */
-	return 0;
+	return findDepth(x,root,0);
 }
 
 /**
  * Traverse a tree rooted at rootNode in-order and use 'v' to visit each node.
  */
 void in_order( Node*& rootNode, int level, Visitor& v ) {
-	/**
-	 * THIS FUNCTION NEEDS TO BE IMPLEMENTED ********************
-	 */
+	if(!rootNode){
+		return;
+	}
+	in_order(rootNode->left, level+1, v);
+	v.visit(rootNode, level);
+	in_order(rootNode->right, level+1, v);
 }
 
 /**
  * Traverse a tree rooted at rootNode pre-order and use 'v' to visit each node.
  */
 void pre_order( Node*& rootNode, int level, Visitor& v ) {
-	/**
-	 * THIS FUNCTION NEEDS TO BE IMPLEMENTED ********************
-	 */
+	if(!rootNode){
+		return;
+	}
+	v.visit(rootNode, level);
+	pre_order(rootNode->left, level+1, v);
+	pre_order(rootNode->right, level+1, v);
 }
 
 /**
  * Traverse a tree rooted at rootNode post-order and use 'v' to visit each node.
  */
 void post_order( Node*& rootNode, int level, Visitor& v ) {
-	/**
-	 * THIS FUNCTION NEEDS TO BE IMPLEMENTED ********************
-	 */
+	if(!rootNode){
+		return;
+	}
+	post_order(rootNode->left, level+1, v);
+	post_order(rootNode->right, level+1, v);
+	v.visit(rootNode, level);
 }
 
 
@@ -327,7 +377,7 @@ void runTests(Node*& tree, std::vector<int> keys) {
 	Unit unit;
 	TestVisitor v;
 
-	std::cout << "Testing Tree:" << std::endl;
+	std::cout << "Testing Tree1:" << std::endl;
 	printTree(tree);
 	std::cout << std::endl;
 
@@ -383,20 +433,27 @@ void runTests(Node*& tree, std::vector<int> keys) {
 
 	//Delete root
 	unit.assertNonNull("Finding 5 (the root)", find(5, tree));
+	std::cout<<"Before Test Case: Deleting 5 (the root)"<<std::endl;
+	printTree(tree);
 	delete_node(tree, 5);
+	std::cout<<"After Test Case: Deleting 5 (the root)"<<std::endl;
+	printTree(tree);
 	unit.assertNull("Deleting 5 (the root)", find(5, tree));
 	unit.assertEquals("Number of nodes", 5, numNodes(tree));
 	unit.assertEquals("Number of leaves", 2, numLeaves(tree));
 	unit.assertEquals("Height", 3, height(tree));
-	
+
 	//Additional tests for delete, height, depth
-	
+
 	Node* tree2 = NULL;
 	insert(7, tree2);
 	insert(9, tree2);
 	insert(5, tree2);
 	insert(1, tree2);
-	
+
+	std::cout << "Testing Tree2:" << std::endl;
+	printTree(tree2);
+
 	//Test height, depth
 	Node* node_9 = find(9, tree2);
 	unit.assertEquals("Height of 9", 0, height(node_9));
@@ -404,13 +461,17 @@ void runTests(Node*& tree, std::vector<int> keys) {
 	Node* node_1 = find(1, tree2);
 	unit.assertEquals("Height of 1", 0, height(node_1));
 	unit.assertEquals("Depth of 1", 2, depth(node_1, tree2));
-	
+
 	// delete root with 2 children, left child of root is predecessor with 1 child
+	std::cout<<"Before Test Case: Deleting 7 in tree2"<<std::endl;
+	printTree(tree2);
 	delete_node(tree2, 7);
+	std::cout<<"After Test Case: Deleting 7 in tree2"<<std::endl;
+	printTree(tree2);
 	unit.assertEquals("Number of nodes", 3, numNodes(tree2));
 	unit.assertEquals("Number of leaves", 2, numLeaves(tree2));
 	unit.assertEquals("Height", 1, height(tree2));
-	
+
     // delete root with 2 children, left child of root is not predecessor, predecessor has 1 child
 	insert(4, tree2);
 	insert(2, tree2);
@@ -451,4 +512,3 @@ int main( int argc, char *argv[] ) {
 	deleteTree(tree);
 	return 0;
 }
-
