@@ -1,7 +1,21 @@
 #ifndef _MINHEAP_H_
 #define _MINHEAP_H_
+#include <iostream>
+#include <cassert>
+#include <vector> 
 
 #define DEFAULT_CAPACITY 256 
+
+class Visitor { public: 
+    virtual ~Visitor() { };
+    virtual void visit(int* _heap, int ix, int level) = 0;
+};
+class PrintVisitor : public Visitor {
+    void visit(int* _heap, int ix, int level) {
+        for (int ii=0; ii<level; ++ii) std::cout << " "; 
+        std::cout << _heap[ix] << std::endl;
+    }
+};
 
 class Minheap {
 public:
@@ -31,17 +45,23 @@ public:
 
     /* returns true IFF _size == 0 */
     bool isEmpty(); 
-    
+
+    /* visit the elements in the heap as a tree */ 
+    void visit_tree(Visitor& visit); 
+
 private:
 	int _capacity;
 	int _size;
-	int* _heap;
+    int* _heap;
 	
-    void print_tree(int ix, int level);  
     void heapify();
     void swap_down(int ix);	
     void swap_up(int ix);	
     
+    void print_tree(int ix, int level);  
+    void visit_tree(int ix, int level, Visitor& visitor); /** for Unit tests */
+    
+
 };
 
 #endif /* _MINHEAP_H_ */

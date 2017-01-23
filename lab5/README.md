@@ -11,9 +11,10 @@ The [Heap Visualizer](https://www.cs.usfca.edu/~galles/visualization/Heap.html) 
 Complete the following methods in **Minheap.cc**
 ```c++
 print_tree(int ix, int level);
+visit_tree(int ix, int level, Visitor& v);
 insert(int element);
 delete_min() ;
-remove_matching(int value_to_remove)
+remove_matching(int value_to_remove);
 ```
 
 For min heap 0 2 1 4 3 9 5 7 6 8, print_tree should output
