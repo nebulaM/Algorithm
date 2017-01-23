@@ -1,7 +1,9 @@
 #include "Minheap.h"
 #include <iostream>
 #include <cassert>
-
+#include <climits>
+#include <iomanip>	// provides std::setw()
+using namespace std;
 /**
  * Construct a minheap from the supplied elements (no extra capacity)
  */
@@ -36,6 +38,14 @@ Minheap::~Minheap() {
     delete[] _heap;
 }
 
+int Minheap::percolateUp(int hole,int val) {
+	while (hole > 0 && val < _heap[(hole-1)/2]){
+	_heap[hole] = _heap[(hole-1)/2];
+	hole = (hole-1)/2;
+	}
+	return hole;
+}
+
 /**
  * Inserts element into the heap
  * PRE: _size < _capacity
@@ -43,11 +53,33 @@ Minheap::~Minheap() {
  * POST: _heap is a valid minimum heap
  */
 void Minheap::insert(int element) {
-	assert( _size < _capacity );
+	//assert( _size < _capacity );
 	// ******** TO BE COMPLETED ********
 	// ******** you cannot use heapify()
+	if(_size < _capacity){
+		_size++;
+		_heap[_size-1]=element;
+		heapify();
+	}
+}
 
-
+int Minheap::percolateDown(int hole, int val) {
+	int target, left, right;
+	while (2*hole+1 < _size) {
+		left = 2*hole + 1;
+		right = left + 1;
+		if (right < _size && _heap[right] < _heap[left])
+			target = right;
+		else
+			target = left;
+		if (_heap[target] < val) {
+			_heap[hole] = _heap[target];
+			hole = target;
+		}
+		else
+			break;
+	}
+	return hole;
 }
 
 /**
@@ -61,9 +93,15 @@ int Minheap::delete_min() {
 	assert( _size > 0 );
 	// ******** TO BE COMPLETED ********
 	// ******** you cannot use heapify()
-
-
-	return -1; // ******** REMOVE THIS LINE
+	if(_size>0){
+		int returnVal=_heap[0];
+		_heap[0]=_heap[_size-1];
+		_size--;
+		heapify();
+		return returnVal;
+	}else{
+		return 0;
+	}
 }
 
 /**
@@ -74,8 +112,18 @@ int Minheap::delete_min() {
 void Minheap::remove_matching(int value_to_remove) {
 	// ******** TO BE COMPLETED ********
 	// ******** heapify() can be used
-
-
+	int count=0;
+	for(int i=0;i<_size;i++){
+		if(_heap[i]==value_to_remove){
+			_heap[i]=INT_MIN;
+			count++;
+		}
+	}
+	heapify();
+	while(count){
+		delete_min();
+		count--;
+	}
 }
 
 // print heap as tree (public method sets up call to recursive method)
@@ -92,10 +140,10 @@ void Minheap::print_tree(int ix, int level) {
 	// BASE CASE we're "out of bounds"
 	if (ix < 0 || ix >= _size) return;
 	// calculate the "pointers" to the left and right children
-	// ******** TO BE COMPLETED ********
-
-
-
+	print_tree(ix*2+2,level+1);
+	std::cout << std::setw( 3 * level ) << "";
+	std::cout<<_heap[ix]<<std::endl;
+	print_tree(ix*2+1,level+1);
 }
 // print heap as array
 void Minheap::print_array(){
@@ -178,5 +226,7 @@ void Minheap::visit_tree(int ix, int level, Visitor& v) {
 	// BASE CASE we're "out of bounds"
 	if (ix < 0 || ix >= _size) return;
 	// calculate the "pointers" to the left and right children
-	// ******** TO BE COMPLETED ********
+	visit_tree( ix*2+2, level+1, v);
+	v.visit( _heap, ix, level );
+	visit_tree( ix*2+1, level+1, v);
 }
