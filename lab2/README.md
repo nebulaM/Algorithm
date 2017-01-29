@@ -1,6 +1,6 @@
 #Lab 2
 
-1. Enter the lab file directory, compile and run the program using:
+Q1. Enter the lab file directory, compile and run the program using:
 
 ```sh
 make
@@ -13,7 +13,7 @@ Debug the program. Identify and correct errors until “insertion” works correctly
 
 Here is the full [user manual for gdb] (https://sourceware.org/gdb/current/onlinedocs/gdb/)
 
-2. Fill in the blanks in the following program.
+Q2. Fill in the blanks in the following program.
 
 ```c++
 #include <iostream>
@@ -34,7 +34,7 @@ int main () {
 }
 ```
 
-3. Experiment with the following code:
+Q3. Experiment with the following code:
 
 ```c++
 #include <iostream>

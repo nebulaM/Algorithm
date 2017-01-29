@@ -2,7 +2,7 @@
 
 You will be comparing three different open addressing schemes.
 
-1. Complete the following functions in hash.cpp:
+Q1. Complete the following functions in hash.cpp:
 ```c++
 void Hash::qinsert(int k) {
 // Insert k in the hash table.
@@ -25,7 +25,7 @@ will insert 900,000 random keys into a hash table of size 1,000,000 using quadra
 ```
 will insert 8,000 random keys into a hash table of size 10,000. Replacing the d with an l will insert keys using linear probing.
 
-2. Run a few experiments to see how the average number of probes per insertion differs when using the different methods and different load factors. 
+Q2. Run a few experiments to see how the average number of probes per insertion differs when using the different methods and different load factors. 
 
 You should think of this as a regular scientific experiemnt that generates data. 
 
@@ -43,7 +43,7 @@ Answer the following questions:
 
 (iv) Finally, which open addressing scheme would you choose and why? Would you always choose this scheme?
 
-3. Modify the main method in driver.cc to automate some of your experiments from question 2. You can run your added experiment code using:
+Q3. Modify the main method in driver.cc to automate some of your experiments from question 2. You can run your added experiment code using:
 ```sh
 ./hash
 ```
