@@ -8,26 +8,28 @@ public:
 	Hashtable(int size);
 	~Hashtable();
 	int hash(int key);
+	int hash2(int key);
 	void qinsert(int key);
 	void linsert(int key);
 	void dinsert(int key);
 	void print();
 	void printStats();
 	float probeRate();
-	void clear(); 
+	void clear();
 	bool checkValue(int key, int index);
 
 private:
 	int* _table;
 	int _size;
+	int _rHash2;
 	int _totalProbes;
 	int _numInserts;
 	int _numFailures;
-	
-	void tallyProbes(int p);	
+
+	void tallyProbes(int p);
 	int nextPrime(int n);
 	bool isPrime(int n);
-	bool isPrime(int n, int divisor); 
+	bool isPrime(int n, int divisor);
 };
 
 #endif
