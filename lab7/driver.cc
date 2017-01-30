@@ -18,31 +18,44 @@ int main(int argc, char *argv[]) {
 	if (argc == 1) {
 		cout << "Running your test code..." << endl;
 		/* ADD YOUR TEST CODE HERE */
-
+		m=500;
+		n=500;
+		Hashtable H(m);
+		for (int i=0; i<n; ++i) {
+			H.qinsert(rand() + 1);
+		}
+		cout << "Quadratic: ";
+		H.print();
+		H.printStats();
+		H.clear();
 		return 0;
 	}
-	
-	if (argc != 4) {
+
+	if (argc != 4 && argc != 5) {
 		usage(argv);
 	}
-	n = atoi(argv[2]);
-	m = atoi(argv[3]);
+	n = atoi(argv[argc-2]);
+	m = atoi(argv[argc-1]);
 	Hashtable H(m);
-	
-	switch(argv[1][0]) {
+
+	switch(argv[argc-3][0]) {
 	case 'l':
 		for (int i=0; i<n; ++i) {
 			H.linsert(rand() + 1);
 		}
-		//    H.print();
-		cout << "Linear: ";  
+		if(argc == 5 && argv[1][0]=='-' && argv[1][1]=='v' ){
+			H.print();
+		}
+		cout << "Linear: ";
 		H.printStats();
 		break;
 	case 'q':
 		for (int i=0; i<n; ++i) {
 			H.qinsert(rand() + 1);
 		}
-		//    H.print();
+		if(argc == 5 && argv[1][0]=='-' && argv[1][1]=='v' ){
+			H.print();
+		}
 		cout << "Quadratic: ";
 		H.printStats();
 		break;
@@ -50,12 +63,13 @@ int main(int argc, char *argv[]) {
 		for (int i=0; i<n; ++i) {
 			H.dinsert(rand() + 1);
 		}
-		//    H.print();
-		cout << "Double Hashing: "; 
+		if(argc == 5 && argv[1][0]=='-' && argv[1][1]=='v' ){
+			H.print();
+		}
+		cout << "Double Hashing: ";
 		H.printStats();
 		break;
 	default:
 		usage(argv);
 	}
 }
-

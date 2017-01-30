@@ -25,13 +25,18 @@ will insert 900,000 random keys into a hash table of size 1,000,000 using quadra
 ```
 will insert 8,000 random keys into a hash table of size 10,000. Replacing the d with an l will insert keys using linear probing.
 
-Q2. Run a few experiments to see how the average number of probes per insertion differs when using the different methods and different load factors. 
+To print out hash table after insertion, using the -v flag
+```sh
+./hash -v q 900000 1000000
+```
 
-You should think of this as a regular scientific experiemnt that generates data. 
+Q2. Run a few experiments to see how the average number of probes per insertion differs when using the different methods and different load factors.
 
-You need to run enough experiements to justify your conclusions, and you need to use a table large enough. 
+You should think of this as a regular scientific experiemnt that generates data.
 
-Try to make the table as large as possible such that you don’t have to wait and unreasonable amount of time for the results. 
+You need to run enough experiements to justify your conclusions, and you need to use a table large enough.
+
+Try to make the table as large as possible such that you don’t have to wait and unreasonable amount of time for the results.
 
 Answer the following questions:
 
@@ -56,6 +61,6 @@ linsert(rand() + 1);
 cout << "Linear with 7500 keys and size 10000: ";
 H.printStats();
 ```
-to automatically see how insert with linear probing performs when inserting 7,500 keys into a hash table of size 10,000. 
+to automatically see how insert with linear probing performs when inserting 7,500 keys into a hash table of size 10,000.
 
 What other experiments might you automate to help you answer the questions from 2?
