@@ -30,11 +30,11 @@ void inorderTraversalHelper(struct TreeNode* root, int* list, int *n){
     }
     inorderTraversalHelper(root->left,list,n);
     if(root->val){
-		//++(*n) returns (*n)+1 and then inc (*n) by 1
-		//(*n)++ returns (*n) and then inc (*n) by 1
-		//*n++ inc the pointer location by 1, not modify the content pointed by this pointer
+	//++(*n) returns (*n)+1 and then inc (*n) by 1
+	//(*n)++ returns (*n) and then inc (*n) by 1
+	//*n++ inc the pointer location by 1, not modify the content pointed by this pointer
         int size=++(*n);
-		//do not forget size parameter in realloc
+	//do not forget size parameter in realloc
         list=(int *)realloc(list,sizeof(int)*(size));
         list[size-1]=root->val;
     }
