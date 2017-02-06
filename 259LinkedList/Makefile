@@ -1,5 +1,5 @@
 all: linkedlist.c linkedlist.h
-	 gcc -g linkedlist.c -o link.o
+	 gcc -g linkedlist.cc -o link.o
 
 clean:
 	rm link.o

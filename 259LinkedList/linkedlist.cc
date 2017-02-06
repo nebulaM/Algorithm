@@ -28,13 +28,13 @@
  PRE:    NULL (no pre-conditions)
  POST:	 NULL (no side-effects)
  RETURN: IF the program exits correctly
-		 THEN 0 ELSE 1
+         THEN 0 ELSE 1
  */
 int main ( void )
 {
-	/* The system command forces the system to pause */
-	system(  "pause");
-	return 0;
+    /* The system command forces the system to pause */
+    system(  "pause");
+    return 0;
 }
 
 /*
@@ -45,8 +45,8 @@ int main ( void )
  */
 struct node * create_linked_list()
 {
-	// Insert your code here
-	return NULL;
+    // Insert your code here
+    return NULL;
 }
 
 /*
@@ -61,12 +61,12 @@ struct node * create_linked_list()
  */
 struct node * create_node(struct airplane plane)
 {
-	// Insert your code here
-	struct node *newnode;
-	newnode=(struct node*)malloc(sizeof(struct node));
-	newnode->plane=plane;
-	newnode->next=NULL;
-	return newnode;
+    // Insert your code here
+    struct node *newnode;
+    newnode=(struct node*)malloc(sizeof(struct node));
+    newnode->plane=plane;
+    newnode->next=NULL;
+    return newnode;
 }
 
 /*
@@ -82,10 +82,10 @@ struct node * create_node(struct airplane plane)
  */
 struct node * prepend_node(struct node * list, struct node * new_node)
 {
-	// Insert your code here
-	new_node->next=list;
-	list=new_node;
-	return list;
+    // Insert your code here
+    new_node->next=list;
+    list=new_node;
+    return list;
 }
 
 /*
@@ -101,15 +101,15 @@ struct node * prepend_node(struct node * list, struct node * new_node)
  */
 struct node * delete_node(struct node * list)
 {
-	// Insert your code here
-  if(!list){
-		return list;
-  }
-	struct node *ptr=list;
-	list=list->next;
-	free(ptr);
-	ptr=NULL;
-	return list;
+    // Insert your code here
+    if(!list){
+        return list;
+    }
+    struct node *ptr=list;
+    list=list->next;
+    free(ptr);
+    ptr=NULL;
+    return list;
 }
 
 /*
@@ -121,18 +121,18 @@ struct node * delete_node(struct node * list)
  */
 int get_length(struct node * list)
 {
-	// Insert your code here
-  if(!list){
-		return 0;
-  }
-	int count=0;
-	struct node *ptr=list;
-	while(ptr)
-	{
-		ptr=ptr->next;
-		count++;
-	}
-	return count;
+    // Insert your code here
+    if(!list){
+        return 0;
+    }
+    int count=0;
+    struct node *ptr=list;
+    while(ptr)
+    {
+        ptr=ptr->next;
+        count++;
+    }
+    return count;
 }
 
 /*
@@ -145,19 +145,19 @@ int get_length(struct node * list)
  */
 struct node * delete_list(struct node * list)
 {
-	// Insert your code here
-  if(!list){
-		return list;
-  }
-	struct node * ptr;
-	while(list)
-	{
-		ptr=list;
-		list=list->next;
-		free(ptr);
-		ptr=NULL;
-	}
-	return list;
+    // Insert your code here
+    if(!list){
+        return list;
+    }
+    struct node * ptr;
+    while(list)
+    {
+        ptr=list;
+        list=list->next;
+        free(ptr);
+        ptr=NULL;
+    }
+    return list;
 }
 
 /*
@@ -174,25 +174,28 @@ struct node * delete_list(struct node * list)
  */
 void print_node(struct node * node_to_print)
 {
-	// Insert your code here
-	if(node_to_print->next==NULL)
-		printf("Link = NULL\n");
-	else
-		printf("Link points to address %d\n",&(node_to_print->next));
-	if(node_to_print==NULL)
-		printf("The node is empty\n");
-	else
-	{
-		printf("Flight number is %d\n",node_to_print->plane.flight_number);
-		printf("City origin is %s\n",node_to_print->plane.city_origin);
-		printf("City destination is %s\n",node_to_print->plane.city_destination);
-		printf("Priority is %d\n",node_to_print->plane.priority);
-		printf("Maximum speed kph is %d\n",node_to_print->plane.maximum_speed_kph);
-		printf("Cruising altitude is %d\n",node_to_print->plane.cruising_altitude);
-		printf("Capacity is %d\n",node_to_print->plane.capacity);
-		printf("\n");
-	}
-	return;
+    // Insert your code here
+    if(!node_to_print->next){
+        printf("Link = NULL\n");
+    }
+    else{
+        printf("Link points to address %d\n",&(node_to_print->next));
+    }
+    if(!node_to_print){
+        printf("The node is empty\n");
+    }
+    else
+    {
+        printf("Flight number is %d\n",node_to_print->plane.flight_number);
+        printf("City origin is %s\n",node_to_print->plane.city_origin);
+        printf("City destination is %s\n",node_to_print->plane.city_destination);
+        printf("Priority is %d\n",node_to_print->plane.priority);
+        printf("Maximum speed kph is %d\n",node_to_print->plane.maximum_speed_kph);
+        printf("Cruising altitude is %d\n",node_to_print->plane.cruising_altitude);
+        printf("Capacity is %d\n",node_to_print->plane.capacity);
+        printf("\n");
+    }
+    return;
 }
 
 /*
@@ -208,22 +211,23 @@ void print_node(struct node * node_to_print)
  */
 void print_list(struct node * list_to_print)
 {
-	// Insert your code here
-  if(!list_to_print)
-		printf("Empty list\n");
-	else
-	{
+    // Insert your code here
+    if(!list_to_print){
+        printf("Empty list\n");
+    }
+    else
+    {
     struct node *ptr=list_to_print;
     int i=1;
-		while(ptr)
-		{
-			printf("Information in node %d: \n",i);
-			print_node(ptr);
-			i++;
-			ptr=ptr->next;
-		}
-	}
-	return;
+        while(ptr)
+        {
+            printf("Information in node %d: \n",i);
+            print_node(ptr);
+            i++;
+            ptr=ptr->next;
+        }
+    }
+    return;
 }
 
 /*
@@ -237,20 +241,20 @@ void print_list(struct node * list_to_print)
  */
 struct node * reverse(struct node * list)
 {
-	// Insert your code here
-	if (!list || !list->next) {
-		return list;
-	}
-	struct node *prev=NULL,*current=list,*next;
-	while(current)
-	{	
-		next=current->next;
-		current->next=prev;
-		prev=current;
-		current=next;
-	}
-	list=prev;
-	return list;
+    // Insert your code here
+    if (!list || !list->next) {
+        return list;
+    }
+    struct node *prev=NULL,*current=list,*next;
+    while(current)
+    {
+        next=current->next;
+        current->next=prev;
+        prev=current;
+        current=next;
+    }
+    list=prev;
+    return list;
 }
 
 /*
@@ -267,102 +271,105 @@ struct node * reverse(struct node * list)
  */
 struct node * remove_from_list(struct node * list, char * destination_city)
 {
-	// Insert your code here
-	if(!list)
-		return list;
-	struct node *ptr=list,*to_delete,*prev=NULL;
-	while(ptr)
-	{
-		if(strncmp(ptr->plane.city_destination,destination_city,strlen(destination_city))==0)
-		{
-			if (list == ptr) {
-				list = list->next;
-			}
-			to_delete=ptr;
-			ptr=ptr->next;
-			free(to_delete);
-			to_delete=NULL;
-			//prev is not empty, there is something before the deleted node.
-			if(prev)
-				prev->next=ptr;
-		}
-		//Track the current node by temp because the current node was not deleted.
-		else {
-			prev = ptr;
-			ptr = ptr->next;
-		}	
-	}  
-	return list;
+    // Insert your code here
+    if(!list){
+        return list;
+    }
+    struct node *ptr=list,*to_delete,*prev=NULL;
+    while(ptr)
+    {
+        if(strncmp(ptr->plane.city_destination,destination_city,strlen(destination_city))==0)
+        {
+            if (list == ptr) {
+                list = list->next;
+            }
+            to_delete=ptr;
+            ptr=ptr->next;
+            free(to_delete);
+            to_delete=NULL;
+            //prev is not empty, there is something before the deleted node.
+            if(prev){
+                prev->next=ptr;
+            }
+        }
+        //Track the current node by temp because the current node was not deleted.
+        else {
+            prev = ptr;
+            ptr = ptr->next;
+        }
+    }
+    return list;
 }
 
 /*
  Returns a reference to the nth node (but does not remove it ) in the
  specified list.  If the list is too short, returns NULL.
  PARAM:     list is a pointer to a (possibly empty) linked list of struct node
- PARAM:     ordinality is an integer
- PRE:       ordinality > 0
+ PARAM:     position is an integer
+ PRE:       position > 0
  POST:      NULL (no side-effects)
- RETURN:    IF ordinality <= length of list
+ RETURN:    IF position <= length of list
             THEN a pointer to the nth node
             ELSE NULL
  */
-struct node * retrieve_nth(struct node * list, int ordinality)
+struct node * retrieve_nth(struct node * list, int position)
 {
-	// Insert your code here
-	int length=get_length(list);
-  if(length<ordinality)
-		return NULL;
-  struct node * ptr=list;
-  int i;
-	for(i=1;i<ordinality;i++)
-		ptr=ptr->next;
-	return ptr;
+    // Insert your code here
+    int length=get_length(list);
+    if(length<position)
+        return NULL;
+    struct node * ptr=list;
+    for(int i=1;i<position;i++){
+        ptr=ptr->next;
+    }
+    return ptr;
 }
 
 /*
  Inserts the specified node into the specified list of nodes at the specified
- ordinality.  For example, if ordinality = 1, this is a simple prepend_node
- operation.  If ordinality = 3, then when this function is finished, the third
- node in the list will be the node_to_insert.  If the ordinality = the length
+ position.  For example, if position = 1, this is a simple prepend_node
+ operation.  If position = 3, then when this function is finished, the third
+ node in the list will be the node_to_insert.  If the position = the length
  of the list + 1, then the node_to_insert is appended to the end of the list.
- If the ordinality > 1 + length of the list, the function returns a pointer
+ If the position > 1 + length of the list, the function returns a pointer
  to the unchanged list.
  PARAM:     list is a pointer to a (possibly empty) linked list of struct node
- PARAM:     ordinality is an integer
- PRE:       ordinality > 0
+ PARAM:     position is an integer
+ PRE:       position > 0
  PRE:       node_to_insert is NEVER a null (it is always a correct node pointer)
  POST:      NULL (no side-effects)
- RETURN:    IF ordinality <= length of list + 1
+ RETURN:    IF position <= length of list + 1
             THEN a pointer to the list which contains the node_to_insert in the
-			correct location
+            correct location
             ELSE a pointer to the unchanged list
  */
-struct node * insert_nth(struct node * list, struct node * node_to_insert, int ordinality)
+struct node * insert_nth(struct node * list, struct node * node_to_insert, int position)
 {
-	// Insert your code here
-	int length=get_length(list);
-  if(ordinality>length+1)
-		return list;
-	else if(ordinality==1)	//insert at the beginning
-	{
-		list=prepend_node(list,node_to_insert);
-		return list;
-	}
-	else if(ordinality==length+1)	//insert at the end
-	{
-    struct node *ptr=list;
-		while(ptr->next)
-			ptr=ptr->next;
-		ptr->next=node_to_insert;
-		return list;
-	}
-  else{
-    struct node *ptr=list;
-    int i;
-  	for(i=1;i<ordinality-1;i++)
-  		ptr=ptr->next;
-  	node_to_insert->next=ptr->next;
-  	ptr->next=node_to_insert;
-  	return list;
-  }
+    // Insert your code here
+    int length=get_length(list);
+    if(position>length+1)
+        return list;
+    else if(position==1)	//insert at the beginning
+    {
+        list=prepend_node(list,node_to_insert);
+        return list;
+    }
+    else if(position==length+1)	//insert at the end
+    {
+        struct node *ptr=list;
+        while(ptr->next){
+            ptr=ptr->next;
+        }
+        ptr->next=node_to_insert;
+        return list;
+    }
+    else{
+        struct node *ptr=list;
+        for(int i=1;i<position-1;i++){
+            ptr=ptr->next;
+        }
+        node_to_insert->next=ptr->next;
+        ptr->next=node_to_insert;
+        return list;
+    }
 }
