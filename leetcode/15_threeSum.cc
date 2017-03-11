@@ -13,28 +13,32 @@ class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
         vector<vector<int>> soln;
-        if(nums.size()<=2){
+        if(nums==NULL || nums.size()<=2){
             return soln;
         }
-        set<vector<int>> solnSet;
-        for(int i=0;i<(nums.size()+2);i++){
-            for(int j=i+1;j<(nums.size()+1);j++){
-                for(int k=j+1;k<nums.size();k++){
-                    int n1=nums.at(i), n2=nums.at(j), n3=nums.at(k);
-                    if((n1+n2+n3)==0){
-                        vector<int> oneSoln;
-                        oneSoln.push_back(n1);
-                        oneSoln.push_back(n2);
-                        oneSoln.push_back(n3);
-                        sort(oneSoln.begin(),oneSoln.end());
-                        solnSet.insert(oneSoln);
-                    }
-                }
-            }
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<(nums.size()-2);i++){
+            if(i==0 || (i>0 && nums[i]!=nums[i-1])){
+				int lo=i+1,hi=nums.size()-1,negNum1=-nums[i];
+				while(lo<hi){
+					if(nums[lo]+nums[hi]==negNum1){
+						soln.push_back({-negNum1,nums[lo], nums[hi]});
+						while(lo<hi && nums[lo]==nums[lo+1]){
+							lo++;
+						}
+						while(lo<hi && nums[hi]==nums[hi-1]){
+							hi--;
+						}
+						lo++;hi--;
+					}else if(nums[lo]+nums[hi]<negNum1){
+						lo++;
+					}else{
+						hi--;
+					}
+				}
+			}
         }
-        copy(solnSet.begin(),solnSet.end(),back_inserter(soln));
         return soln;
-        
     }
 
 };
