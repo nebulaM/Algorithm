@@ -34,7 +34,7 @@ private:
                 count=1;
             }
         }
-		//last character
+        //last character
         if(count>1){
             out<<count<<result.at(result.length()-1);
         }else{

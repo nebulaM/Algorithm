@@ -19,7 +19,7 @@ public:
             newX+=pushNumTo(getNumAt(localX,tmp),digit-tmp);
             tmp--;
         }
-		//checksum to see if overflow
+        //checksum to see if overflow
         for(int i=0;i<digit;i++){
             if(getNumAt(localX,i+1)!=getNumAt(newX,digit-i)){
                 return 0;
@@ -29,8 +29,8 @@ public:
     }
 	
     /**
-	 * @return base 10 digit of the number
-	 */
+     * @return base 10 digit of the number
+     */
     int getDigit(int num){
         int thisNum=abs(num);
         int digit=1;
@@ -41,8 +41,8 @@ public:
         return digit;
     }
     /**
-	 * @return base 2 digit of the number
-	 */
+     * @return base 2 digit of the number
+     */
     int getBit(int num){
 		//boundary case: abs(-2147483649) returns -2147483649 when using int
         unsigned int thisNum=(unsigned int)abs(num);
@@ -59,9 +59,9 @@ public:
         return bit;
     }
     /**
-	 * @param num must >0
-	 * @param numPosition position of the number
-	 */
+     * @param num must >0
+     * @param numPosition position of the number
+     */
     int getNumAt(int num, int numPosition){
         while(numPosition>1){
             num/=10;
@@ -70,10 +70,10 @@ public:
         return num%10;
     }
     
-	/**
-	 * @param num must >0
-	 * @param numPosition position of the number
-	 */
+    /**
+     * @param num must >0
+     * @param numPosition position of the number
+     */
     int pushNumTo(int num, int numPosition){
         while(numPosition>0){
             num*=10;
